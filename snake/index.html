@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pl"><head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Snake game</title>
+	<link rel="stylesheet" href="style.css">
+</head><body>
+
+<canvas id="game" width="1" height="1"></canvas>
+
+<p id="score"></p>
+
+<script src="snake.js" type="module"></script>
+<script type="module">
+// {
+import Snake from './snake.js';
+let snake = new Snake();
+
+import Matrix from './Matrix/index.js';
+const grid = new Matrix(20, 20);
+
+window.framesPerSecond = 1; /* 10 seems ok */
+const canvas = document.getElementById("game");
+const context = canvas.getContext("2d");
+const size = 16;
+let food = true;
+// }
+
+// { shim layer with setTimeout fallback
+window.requestAnimFrame = (function(){
+	return window.requestAnimationFrame        ||
+		window.webkitRequestAnimationFrame       ||
+		window.mozRequestAnimationFrame          ||
+		function (callback) {
+			window.setTimeout(callback, 1000 / 60);
+		};
+})();
+// }
+
+// { start somewhere
+grid.set(snake.body[0].x, snake.body[0].y, '*');
+snake.dir.x =+ 1;
+// }
+
+// resize the canvas
+canvas.width = grid.width * size;
+canvas.height = grid.height * size;
+
+document.body.addEventListener('keydown', function (e) {
+	var key = e.keyCode;
+	switch (key) {
+		case 37: // ←
+			snake.dir.x = -1;
+			snake.dir.y = 0;
+			break;
+		case 38: // ↑
+			snake.dir.x = 0;
+			snake.dir.y = -1;
+			break;
+		case 39: // →
+			snake.dir.x = 1;
+			snake.dir.y = 0;
+			break;
+		case 40: // ↓
+			snake.dir.x = 0;
+			snake.dir.y = 1;
+			break;
+		default:
+			// do nothing
+			console.log(`key ${key} pressed`)
+			break;
+	}
+});
+
+(function animLoop () {
+	dontLeaveTrace();
+	update();
+	draw();
+	bounce();
+
+	if (!grid.isInside(snake.body[0].x, snake.body[0].y)) {
+		document.querySelector('body').innerHTML = 'Jesteś cienki Bolek --- twój wąż uciekł ci hihi';
+		return;
+	}
+
+	if (Math.random() > 0.10 && food) {
+		food = false;
+		findEmptyCellAndPutFood();
+	}
+	setTimeout(function () {
+	/*
+	 * it is nice to use requestAnimationFrame function but it runs too fast for me
+	 * I need a method to reduce frame rate; thus using setTimeout()
+	 */
+		requestAnimFrame(animLoop);
+	}, 2000 / framesPerSecond);
+})();
+
+function dontLeaveTrace () {
+	canvas.width = canvas.width;
+}
+
+function bounce () {
+	if (snake.body[0].x < 1) snake.dir.x *= -1;
+	if (snake.body[0].x > grid.width -2) snake.dir.x *= -1;
+	if (snake.body[0].y < 1) snake.dir.y *= -1;
+	if (snake.body[0].y > grid.height -2) snake.dir.y *= -1;
+}
+
+function findEmptyCellAndPutFood () {
+/*
+ * Find an empty cell and put food in it.
+ * First try in the centre.
+ *
+ * There is something wrong.
+ * TODO: Fix it!
+ */
+	let tryCell = {
+		x: Math.floor(Math.random() * grid.width),
+		y: Math.floor(Math.random() * grid.height)
+	};
+	while (grid.get(tryCell.x, tryCell.y) === undefined) {
+		grid.set(tryCell.x, tryCell.y, 'f');
+		food = true;
+		break;
+	}
+}
+
+function update () {
+	document.querySelector('#score').innerText = snake.body.length;
+
+	snake.history.push({ x: snake.body[0].x, y: snake.body[0].y });
+	// { old position
+	grid.set(snake.body[0].x, snake.body[0].y, undefined);
+	// }
+	// { new position
+	// Update the head
+	snake.body[0].x += snake.dir.x;
+	snake.body[0].y += snake.dir.y;
+	(grid.get(snake.body[0].x, snake.body[0].y) === 'f') && snake.grow();
+	// }
+	// { move the whole body accordingly
+	if (snake.body.length > 1) {
+		for (let i = 1; i < snake.body.length; ++i) {
+			grid.set(snake.body[i].x, snake.body[i].y, undefined);
+			snake.body[i].x = snake.history[snake.history.length -i].x
+			snake.body[i].y = snake.history[snake.history.length -i].y
+			grid.set(snake.body[i].x, snake.body[i].y, 'x');
+		}
+	}
+
+	// Mark the head
+	grid.set(snake.body[0].x, snake.body[0].y, '*');
+	// }
+}
+
+// {
+// TODO: refactor
+function draw () {
+	for (let {x, y, value} of grid) {
+		switch (value) {
+			case '*':
+				context.fillStyle = `#F00`;
+				context.fillRect(x * size, y * size, size, size);
+				break;
+			case 'f':
+				context.fillStyle = `#0F0`;
+				context.fillRect(x * size, y * size, size, size);
+				break;
+			case 'x':
+				context.fillStyle = `#00F`;
+				context.fillRect(x * size, y * size, size, size);
+				break;
+		}
+	}
+}
+// }
+</script>
+</body></html>

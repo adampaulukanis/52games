@@ -1,0 +1,46 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+MatrixIterator	Matrix/index.js	/^class MatrixIterator {$/;"	C
+assert	Matrix/testMatrix.js	/^import { strict as assert } from 'assert';$/;"	I
+bounce	index.html	/^function bounce () {$/;"	f
+describe	Matrix/testMatrix.js	/^  describe('constructor', function () {$/;"	M
+describe	Matrix/testMatrix.js	/^  describe('get', function () {$/;"	M
+describe	Matrix/testMatrix.js	/^  describe('isInside', function () {$/;"	M
+describe	Matrix/testMatrix.js	/^  describe('iterator', function () {$/;"	M
+describe	Matrix/testMatrix.js	/^  describe('set', function () {$/;"	M
+describe	Matrix/testMatrix.js	/^  describe('toString', function () {$/;"	M
+describe	Matrix/testMatrix.js	/^describe('Matrix', function () {$/;"	M
+dir	snake.js	/^		this.dir = { x: 0, y: 0 };$/;"	P
+dontLeaveTrace	index.html	/^function dontLeaveTrace () {$/;"	f
+draw	index.html	/^function draw () {$/;"	f
+grow	snake.js	/^		this.grow = function () {$/;"	M
+it	Matrix/testMatrix.js	/^    it('looping over a matrix with for\/of loop', function () {$/;"	M
+it	Matrix/testMatrix.js	/^    it('retrieves the correct value', function () {$/;"	M
+it	Matrix/testMatrix.js	/^    it('should work', function () {$/;"	M
+it	Matrix/testMatrix.js	/^    it('the output is a string', function () {$/;"	M
+it	Matrix/testMatrix.js	/^    it('the point is inside', function () {$/;"	M
+it	Matrix/testMatrix.js	/^    it('the point is outside', function () {$/;"	M
+it	Matrix/testMatrix.js	/^    it('works', function () {$/;"	M
+it	Matrix/testMatrix.js	/^    it('wrong parameters throw when x is bigger than width', function () {$/;"	M
+it	Matrix/testMatrix.js	/^    it('wrong parameters throw when x is smaller than 0', function () {$/;"	M
+it	Matrix/testMatrix.js	/^    it('wrong parameters throw when y is bigger than height', function () {$/;"	M
+it	Matrix/testMatrix.js	/^    it('wrong parameters throw when y is smaller than 0', function () {$/;"	M
+it	Matrix/testMatrix.js	/^    it('you can chain it', function () {$/;"	M
+m	Matrix/testMatrix.js	/^      let m = new Matrix(2, 2);$/;"	V
+m	Matrix/testMatrix.js	/^      let m = new Matrix(2, 2, (x, y) => `hi hi ${x} ${y}`);$/;"	V
+matrix	Matrix/testMatrix.js	/^      let matrix = new Matrix(2, 2, (x, y) => `value ${x}, ${y}`);$/;"	F
+matrix	Matrix/testMatrix.js	/^      let matrix = new Matrix(2, 2, (x, y) => `value ${x}, ${y}`);$/;"	V
+napis	Matrix/testMatrix.js	/^      let napis = new Matrix(3, 3, (x, y) => `(${x} ${y})`).toString();$/;"	F
+napis	Matrix/testMatrix.js	/^      let napis = new Matrix(3, 3, (x, y) => `(${x} ${y})`).toString();$/;"	V
+output	Matrix/index.js	/^		let output = '';$/;"	V
+putFood	index.html	/^function putFood () {$/;"	f
+temp	Matrix/testMatrix.js	/^      let temp = new Matrix(1, 1);$/;"	V
+temp	Matrix/testMatrix.js	/^      let temp = new Matrix(1, 1, (x, y) => `Matrix${x} ${y}`);$/;"	F
+temp	Matrix/testMatrix.js	/^      let temp = new Matrix(1, 1, (x, y) => `Matrix${x} ${y}`);$/;"	V
+temp	Matrix/testMatrix.js	/^      let temp = new Matrix(2, 2);$/;"	V
+update	index.html	/^function update () {$/;"	f
+value	Matrix/index.js	/^		let value = {$/;"	O
