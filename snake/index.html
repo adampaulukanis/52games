@@ -9,6 +9,7 @@
 <canvas id="game" width="1" height="1"></canvas>
 
 <p id="score"></p>
+<p id="collision"></p>
 
 <script src="snake.js" type="module"></script>
 <script type="module">
@@ -19,7 +20,7 @@ let snake = new Snake();
 import Matrix from './Matrix/index.js';
 const grid = new Matrix(20, 20);
 
-window.framesPerSecond = 1; /* 10 seems ok */
+window.framesPerSecond = 2; /* 10 seems ok */
 const canvas = document.getElementById("game");
 const context = canvas.getContext("2d");
 const size = 16;
@@ -76,12 +77,7 @@ document.body.addEventListener('keydown', function (e) {
 	dontLeaveTrace();
 	update();
 	draw();
-	bounce();
 
-	if (!grid.isInside(snake.body[0].x, snake.body[0].y)) {
-		document.querySelector('body').innerHTML = 'Jesteś cienki Bolek --- twój wąż uciekł ci hihi';
-		return;
-	}
 
 	if (Math.random() > 0.10 && food) {
 		food = false;
@@ -98,13 +94,6 @@ document.body.addEventListener('keydown', function (e) {
 
 function dontLeaveTrace () {
 	canvas.width = canvas.width;
-}
-
-function bounce () {
-	if (snake.body[0].x < 1) snake.dir.x *= -1;
-	if (snake.body[0].x > grid.width -2) snake.dir.x *= -1;
-	if (snake.body[0].y < 1) snake.dir.y *= -1;
-	if (snake.body[0].y > grid.height -2) snake.dir.y *= -1;
 }
 
 function findEmptyCellAndPutFood () {
@@ -137,7 +126,17 @@ function update () {
 	// Update the head
 	snake.body[0].x += snake.dir.x;
 	snake.body[0].y += snake.dir.y;
-	(grid.get(snake.body[0].x, snake.body[0].y) === 'f') && snake.grow();
+	if (grid.get(snake.body[0].x, snake.body[0].y) === 'f') {
+		snake.grow();
+	}
+	// }
+	// { check collision
+	// why indexOf or some do not work? Don't they support objects as arguments?
+	snake.body.slice(1).forEach(el => {
+		if (el.x === snake.body[0].x && el.y === snake.body[0].y) {
+			document.querySelector('body').innerText = 'Przegrałeś bo jesteś cienkim Bolkiem!';
+		}
+	});
 	// }
 	// { move the whole body accordingly
 	if (snake.body.length > 1) {
