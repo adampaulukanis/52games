@@ -13,4 +13,14 @@
 				<li><a href="./snake/">Snake</a></li>
 			</ul>
 		</main>
+
+<script>
+var snake = document.getElementsByTagName('li')[0];
+snake.dataset['siemanko'] = 'kaszana';
+
+document.addEventListener('click', function () {
+	alert(snake.getAttribute('data-siemanko'));
+	alert(snake.dataset['siemanko']);
+});
+</script>
 	</body></html>
