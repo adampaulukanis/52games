@@ -10,8 +10,6 @@
 	<canvas id="game" width="1" height="1"></canvas>
 </div>
 
-<p id="score"></p>
-
 <p>Klik na grę aby powiększyć. ESC aby wyjść z tego.</p>
 
 <script src="snake.js" type="module"></script>
@@ -28,6 +26,7 @@ const canvas = document.getElementById("game");
 const context = canvas.getContext("2d");
 const size = 16;
 let food = true;
+let isGameOver = false;
 // }
 
 // { shim layer with setTimeout fallback
@@ -77,6 +76,8 @@ document.body.addEventListener('keydown', function (e) {
 });
 
 (function animLoop () {
+	if (isGameOver)
+		return;
 	dontLeaveTrace();
 	update();
 	draw();
@@ -119,10 +120,14 @@ function findEmptyCellAndPutFood () {
 }
 
 function update_scores () {
-	document.querySelector('#score').innerText = snake.body.length;
 	context.font = '48px serif';
 	context.fillStyle = 'white';
 	context.fillText(snake.body.length, 10, 50);
+}
+
+function gameOver () {
+	isGameOver = true;
+	document.querySelector('body').innerText = 'Przegrałeś bo jesteś cienkim Bolkiem!';
 }
 
 function update () {
@@ -137,6 +142,8 @@ function update () {
 	snake.body[0].x += snake.dir.x;
 	snake.body[0].y += snake.dir.y;
 	// If outside, game over
+	if (!grid.isInside(snake.body[0].x, snake.body[0].y))
+		gameOver();
 
 	if (grid.get(snake.body[0].x, snake.body[0].y) === 'f') {
 		snake.grow();
@@ -145,9 +152,8 @@ function update () {
 	// { check collision
 	// why indexOf or some do not work? Don't they support objects as arguments?
 	snake.body.slice(1).forEach(el => {
-		if (el.x === snake.body[0].x && el.y === snake.body[0].y) {
-			document.querySelector('body').innerText = 'Przegrałeś bo jesteś cienkim Bolkiem!';
-		}
+		if (el.x === snake.body[0].x && el.y === snake.body[0].y)
+			gameOver();
 	});
 	// }
 	// { move the whole body accordingly
