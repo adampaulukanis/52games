@@ -10,6 +10,9 @@
 
 <p id="score"></p>
 
+<hr><br>
+<p>Klik na grę aby powiększyć. ESC aby wyjść z tego.</p>
+
 <script src="snake.js" type="module"></script>
 <script type="module">
 // {
@@ -114,8 +117,15 @@ function findEmptyCellAndPutFood () {
 	}
 }
 
-function update () {
+function update_scores () {
 	document.querySelector('#score').innerText = snake.body.length;
+	context.font = '48px serif';
+	context.fillStyle = 'white';
+	context.fillText(snake.body.length, 10, 50);
+}
+
+function update () {
+	update_scores();
 
 	snake.history.push({ x: snake.body[0].x, y: snake.body[0].y });
 	// { old position
@@ -173,5 +183,22 @@ function draw () {
 	}
 }
 // }
+
+function goFullscreen (element) {
+	if (element.requestFullscreen)
+		element.requestFullscreen();
+	else if (element.webkitRequestFullscreen)
+		element.webkitRequestFullscreen();
+	else if (element.mozRequestFullScreen)
+		element.mozRequestFullScreen();
+	else if (element.msRequestFullscreen)
+		element.msRequestFullscreen();
+	else
+		console.error('fullscreen does not work.');
+}
+
+canvas.addEventListener('click', () => {
+	goFullscreen(canvas);
+});
 </script>
 </body></html>
