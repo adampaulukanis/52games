@@ -6,11 +6,12 @@
 	<link rel="stylesheet" href="style.css">
 </head><body>
 
-<canvas id="game" width="1" height="1"></canvas>
+<div id="wrap">
+	<canvas id="game" width="1" height="1"></canvas>
+</div>
 
 <p id="score"></p>
 
-<hr><br>
 <p>Klik na grę aby powiększyć. ESC aby wyjść z tego.</p>
 
 <script src="snake.js" type="module"></script>
@@ -135,6 +136,8 @@ function update () {
 	// Update the head
 	snake.body[0].x += snake.dir.x;
 	snake.body[0].y += snake.dir.y;
+	// If outside, game over
+
 	if (grid.get(snake.body[0].x, snake.body[0].y) === 'f') {
 		snake.grow();
 	}
@@ -168,7 +171,7 @@ function draw () {
 	for (let {x, y, value} of grid) {
 		switch (value) {
 			case '*':
-				context.fillStyle = `#F00`;
+				context.fillStyle = `#F10`;
 				context.fillRect(x * size, y * size, size, size);
 				break;
 			case 'f':
@@ -176,7 +179,7 @@ function draw () {
 				context.fillRect(x * size, y * size, size, size);
 				break;
 			case 'x':
-				context.fillStyle = `#00F`;
+				context.fillStyle = `#D42`;
 				context.fillRect(x * size, y * size, size, size);
 				break;
 		}
@@ -198,7 +201,7 @@ function goFullscreen (element) {
 }
 
 canvas.addEventListener('click', () => {
-	goFullscreen(canvas);
+	goFullscreen(document.querySelector('#wrap'));
 });
 </script>
 </body></html>

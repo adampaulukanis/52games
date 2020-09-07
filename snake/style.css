@@ -16,6 +16,13 @@ body {
 #game {
   background: #515151;
 }
-#game:-webkit-full-screen {
+#wrap {
+  display: flex;
+  justify-content: center;
+}
+#wrap canvas {
+  height: 100%;
+}
+#wrap:-webkit-full-screen canvas {
   height: 100vh;
 }
