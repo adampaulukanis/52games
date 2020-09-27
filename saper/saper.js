@@ -4,7 +4,7 @@ const canvas = document.getElementById("game");
 const context = canvas.getContext("2d");
 const size = 10;
 
-import Matrix from '../snake/Matrix/index.js';
+import Matrix from '../Matrix/index.js';
 let matrix = new Matrix(40, 40, (x, y) => 0);
 canvas.width = matrix.width * size;
 canvas.height = matrix.height * size;

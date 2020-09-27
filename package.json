@@ -1,0 +1,19 @@
+{
+  "name": "52games",
+  "version": "1.0.0",
+  "description": "Every week I will make a new game.",
+  "main": "index.js",
+  "scripts": {
+    "start": "php -S localhost:1234"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adampaulukanis/52games.git"
+  },
+  "author": "Adam Paulukanis",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adampaulukanis/52games/issues"
+  },
+  "homepage": "https://github.com/adampaulukanis/52games#readme"
+}
