@@ -7,6 +7,10 @@ body {
 h1 {
   margin: auto;
 }
+main {
+  width: 900px;
+  margin: 0 auto;
+}
 main ul {
   list-style: none;
   display: grid;
@@ -18,6 +22,7 @@ main ul {
 main ul li {
   place-items: center;
   display: block;
+  margin: .2rem;
 }
 main ul li a {
   padding: 1rem;
