@@ -19,16 +19,6 @@ main {
   justify-content: center;
   cursor: pointer;
 }
-main div {
-  background: yellow;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-main div:hover {
-  background: orange;
-}
 main canvas {
   height: 100%;
 }

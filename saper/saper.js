@@ -2,10 +2,11 @@
 
 const canvas = document.getElementById("game");
 const context = canvas.getContext("2d");
-const size = 10;
+const size = 40;
 
 import Matrix from '../Matrix/index.js';
-let matrix = new Matrix(40, 40, (x, y) => 0);
+let matrix = new Matrix(10, 10, (x, y) => 0);
+matrix.set(7, 5, 1);
 canvas.width = matrix.width * size;
 canvas.height = matrix.height * size;
 
@@ -21,11 +22,6 @@ window.requestAnimFrame = (function(){
 (function animLoop () {
   dontLeaveTrace();
   draw();
-  let randomCell = { x: Math.floor(Math.random() * matrix.width), y: Math.floor(Math.random() * matrix.height) };
-  if (matrix.get(randomCell.x, randomCell.y) === 0)
-    matrix.set(randomCell.x, randomCell.y, 1)
-  else
-    matrix.set(randomCell.x, randomCell.y, 2)
 
   requestAnimFrame(animLoop);
 })();
@@ -47,15 +43,10 @@ document.querySelector('main').addEventListener('click', () => {
   goFullscreen(document.querySelector('main'));
 });
 
-document.querySelector('#next').addEventListener('click', () => someNumber++);
-document.querySelector('#prev').addEventListener('click', () => someNumber--);
-
 function draw () {
   for (let { x, y, value } of matrix) {
-    if (value === 0)
+    if (value === 'b')
       context.fillStyle = 'black';
-    else if (value === 2)
-      context.fillStyle = 'white';
     else
       context.fillStyle = 'orange';
 
@@ -66,3 +57,17 @@ function draw () {
 function dontLeaveTrace () {
 	canvas.width = canvas.width;
 }
+
+// {
+function randomBomb () {
+  let randomX = Math.floor(Math.random() * matrix.width);
+  let randomY = Math.floor(Math.random() * matrix.height);
+  if (matrix.get(randomX, randomY) === 'b') // in case there is already a bomb
+    randomBomb(); // try again and hope this time it will be an empty spot
+  matrix.set(randomX, randomY, 'b');
+}
+
+const numberOfBombs = 10; // no idea if this number is OK
+for (let i = 0; i < numberOfBombs; ++i)
+  randomBomb();
+// }
