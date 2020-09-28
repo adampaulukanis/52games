@@ -45,11 +45,14 @@ document.querySelector('main').addEventListener('click', () => {
 
 function draw () {
   for (let { x, y, value } of matrix) {
-    if (value === 'b')
-      context.fillStyle = 'black';
-    else
-      context.fillStyle = 'orange';
-
+    switch (value) {
+      case 'b':
+        context.fillStyle = 'black';
+        break;
+      default:
+        context.fillStyle = 'orange';
+        break;
+    }
     context.fillRect(x * size, y * size, size, size);
   }
 }
