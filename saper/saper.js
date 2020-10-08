@@ -1,6 +1,6 @@
 'use strict';
 
-import Matrix from '../Matrix/index.js';
+import Matrix from '../src/Matrix.js';
 
 window.onload = function ()
 {
