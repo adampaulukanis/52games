@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/adampaulukanis/52games/issues"
   },
-  "homepage": "https://adampaulukanis.github.io/52games"
+  "homepage": "https://adampaulukanis.github.io/52games",
+  "dependencies": {
+    "matrix": "git+https://github.com/adampaulukanis/Matrix.git"
+  }
 }
