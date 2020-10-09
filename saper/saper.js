@@ -2,38 +2,80 @@
 
 import Matrix from '../src/Matrix.js';
 
-window.onload = function ()
-{
+window.onload = function () {
   const canvas = document.getElementById("game");
-  const context = canvas.getContext("2d");
-  const size = 50;
-  const numberOfBombs = 5; // no idea if this number is OK
-  const textFont = `${size}px serif`;
+  const gDrawingContext = canvas.getContext("2d");
+  const output = document.querySelector('output');
+  const size = 50; // in px
+  const numberOfBombs = 40; // no idea if this number is OK
+  const textFont = (function () { return `${size}px serif`; })();
   const textFillStyle = 'white';
   // not sure what would be a proper name for 2 variables below
-  const kPieceHeight = 10;
+  const kPieceHeight = 10; // k means canvas
   const kPieceWidth = 10;
 
-  let matrix = new Matrix(kPieceWidth, kPieceHeight, (x, y) => 0);
+  let isOver = false;
+
+  class Cell {
+    constructor () {
+      this.data = 0;
+      this.seen = false;
+    };
+
+    toString () {
+      return this.data;
+    };
+  }; // end of Cell class
+
+  let matrix = new Matrix(kPieceWidth, kPieceHeight, (x, y) => new Cell());
   canvas.width = matrix.width * size;
   canvas.height = matrix.height * size;
 
   canvas.addEventListener('click', saperOnClick, false);
 
-  function draw ()
-  {
+  function draw () {
+    if (isOver)
+      return;
+
     // {
     /*
     canvas.width = canvas.width;
     Has it got the same effect as the very line below?
     */
-    context.clearRect(0, 0, canvas.width, canvas.height);
+    gDrawingContext.clearRect(0, 0, canvas.width, canvas.height);
     // }
+
+    // { drawing lines
+    gDrawingContext.beginPath();
+
+    /* vertical lines */
+    for (let x = 0; x <= canvas.width; x += size) {
+      gDrawingContext.moveTo(0 + x, 0);
+      gDrawingContext.lineTo(0 + x, canvas.height);
+    }
+
+    /* horizontal lines */
+    for (let y = 0; y <= canvas.height; y += size) {
+      gDrawingContext.moveTo(0, 0 + y);
+      gDrawingContext.lineTo(canvas.width, 0 + y);
+    }
+
+    /* draw it! */
+    gDrawingContext.strokeStyle = '#ccc';
+    gDrawingContext.stroke();
+    // }
+
     for (let { x, y, value } of matrix) {
-      switch (value) {
+      if (!value.seen)
+        continue;
+
+      switch (value.data) {
         case 'b':
-          context.fillStyle = 'green';
-          context.fillRect(x * size, y * size, size, size);
+          gDrawingContext.font = `${size -15}px serif`;
+          gDrawingContext.fillStyle = textFillStyle;
+          gDrawingContext.textAlign = 'center';
+          gDrawingContext.fillText('💣', x * size + size / 2, y * size + size / 1.2);
+          gameOver();
           break;
         case 0:
         case 1:
@@ -44,9 +86,10 @@ window.onload = function ()
         case 6:
         case 7:
         case 8:
-          context.font = textFont;
-          context.fillStyle = textFillStyle;
-          context.fillText(value, x * size + size / 3, y * size + size / 1.2);
+          gDrawingContext.font = textFont;
+          gDrawingContext.fillStyle = textFillStyle;
+          gDrawingContext.textAlign = 'center';
+          gDrawingContext.fillText(value, x * size + size / 2, y * size + size / 1.2);
           break;
         case 9:
         case 10:
@@ -55,32 +98,32 @@ window.onload = function ()
           break;
       }
     }
-  }
+  }; // end of draw()
 
-  // {
-  function randomBomb ()
-  {
-    let randomX = Math.floor(Math.random() * matrix.width);
-    let randomY = Math.floor(Math.random() * matrix.height);
-    if (matrix.isInside(randomX, randomY) && matrix.get(randomX, randomY) === 'b') // in case there is already a bomb
-      randomBomb(); // try again and hope this time it will be an empty spot
+  // { put bombs
+  for (let i = 0; i < numberOfBombs; ++i) {
+    (function randomBomb () {
+      let randomX = Math.floor(Math.random() * matrix.width);
+      let randomY = Math.floor(Math.random() * matrix.height);
+      if (matrix.isInside(randomX, randomY) && matrix.get(randomX, randomY).data === 'b') // in case there is already a bomb
+        randomBomb(); // try again and hope this time it will be an empty spot
 
-    // console.log(`Set a bomb at ${randomX}x${randomY}!`);
-    matrix.set(randomX, randomY, 'b');
+      // console.log(`Set a bomb at ${randomX}x${randomY}!`);
+      let cell = matrix.get(randomX, randomY);
+      cell.data = 'b';
+      matrix.set(randomX, randomY, cell);
+    })();
   };
+  // }
 
-  for (let i = 0; i < numberOfBombs; ++i)
-    randomBomb();
-
-  // It is time to put numbers indicating how many bombs the cell has in its neighbour
-  function numbers ()
-  {
+  function numbers () {
+    // It is time to put numbers indicating how many bombs the cell has in its neighbour
     for (let { x, y, v } of matrix)
     {
-      if (matrix.get(x, y) === 'b') {
+      if (matrix.get(x, y).data === 'b') {
         if (matrix.isInside(x, y -1)) { // North
-          if (matrix.get(x, y -1) !== 'b') {
-            let noBombs = Number(matrix.get(x, y -1));
+          if (matrix.get(x, y -1).data !== 'b') {
+            let noBombs = Number(matrix.get(x, y -1).data);
             matrix.set(x, y -1, ++noBombs);
           }
         }
@@ -128,21 +171,26 @@ window.onload = function ()
         }
       }
     }
-  };
-  // }
+  }; // end of numbers()
 
-  function saperOnClick (e)
-  {
-    let cell = getCursorPosition(e);
+  function saperOnClick (e) {
+    const XY = getCursorPosition(e);
+    let cell = matrix.get(XY.x, XY.y);
+    cell.seen = true;
     console.log(cell);
-    matrix.set(cell.x, cell.y, 'b');
-    clearBoard();
-    numbers();
     draw();
-  };
+    return;
+    let temp = matrix.get(cell.x, cell.y);
+    temp.seen = true;
+    temp.data = '⚐';
+    console.log(temp);
+    matrix.set(cell.x, cell.y, temp);
+    clearBoard();
+    // numbers();
+    draw();
+  }; // end of saperOnClick()
 
-  function getCursorPosition (e)
-  {
+  function getCursorPosition (e) {
     let x;
     let y;
     // x and y are coordinates relative to the document (entire HTML page)
@@ -161,15 +209,20 @@ window.onload = function ()
       x: Math.floor(x / size),
       y: Math.floor(y / size),
     };
-  };
+  }; // end of getCursorPosition()
 
   function clearBoard () {
     for (let { x, y, value } of matrix) {
       if (matrix.get(x, y) !== 'b')
         matrix.set(x, y, 0);
     }
-  }
+  }; // end of clearBoard()
 
-  numbers();
+  function gameOver () {
+    isOver = true;
+    document.querySelector('p').innerText = 'Game Over!';
+  };
+
+  // numbers();
   draw();
-};
+}; // end of onload()
