@@ -1,0 +1,26 @@
+*{
+  margin: 0; padding: 0; border: none;
+  font-family: "Lucida Console", Courier, monospace;
+  color: white;
+  cursor: pointer;
+}
+head, head title{
+  display: block;
+  font-size: 150%;
+  text-align: center;
+  margin: .5rem;
+  color: black;
+}
+ul#colors li{
+  padding: .5rem;
+  margin: .1rem;
+}
+ul#colors li:hover{
+  outline:2px solid red;
+  font-size: 120%;
+}
+ul#colors li span{
+  background: black;
+  color: white;
+  padding: 2px;
+}
