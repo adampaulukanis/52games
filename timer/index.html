@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Timer SVG JS</title>
+<style>
+* {box-sizing: border-box;}
+html { height: 100%; }
+body { background: pink; font-size: 2rem; }
+#timer {
+  width: 500px;
+  height: 500px;
+  border:1px solid blue;
+}
+</style>
+</head>
+<body>
+<svg id="timer">
+  <g id="tarcza">
+    <circle id="circle" cx="250" cy="250" r="113" stroke="green" stroke-width="4" fill="yellow"></circle>
+    <line x1="250" y1="137" x2="250" y2="363" style="stroke:#f00" transform="rotate(0, 250, 250)"></line>
+    <line x1="250" y1="137" x2="250" y2="363" style="stroke:#f00" transform="rotate(30, 250, 250)"></line>
+    <line x1="250" y1="137" x2="250" y2="363" style="stroke:#f00" transform="rotate(60, 250, 250)"></line>
+    <line x1="250" y1="137" x2="250" y2="363" style="stroke:#f00" transform="rotate(90, 250, 250)"></line>
+    <line x1="250" y1="137" x2="250" y2="363" style="stroke:#f00" transform="rotate(120, 250, 250)"></line>
+    <line x1="250" y1="137" x2="250" y2="363" style="stroke:#f00" transform="rotate(150, 250, 250)"></line>
+    <line x1="250" y1="137" x2="250" y2="363" style="stroke:#f00" transform="rotate(180, 250, 250)"></line>
+  </g>
+  <circle id="godz" cx="250" cy="250" r="15" stroke="black"></circle>
+  <circle id="minuta" cx="250" cy="250" r="10" stroke="brown" fill="brown"></circle>
+  <circle id="sekunda" cx="250" cy="250" r="5" stroke="red" fill="blue"></circle>
+  <text id="sek" x="20" y="40">Example SVG text 1</text>
+  Sorry, your browser does not support inline SVG.
+</svg>
+<br>
+<output id="output"></output>
+<script>
+var svg = document.getElementById('svg');
+var circle = document.getElementById('circle');
+var output = document.getElementById('output');
+var sekunda = document.getElementById('sekunda');
+var minuta = document.getElementById('minuta');
+var godz = document.getElementById('godz');
+</script>
+
+<script>
+var timerFunction = null;
+
+function startAnimation() {
+  if(timerFunction == null) {
+    timerFunction = setInterval(kropki, 1000);
+  }
+}
+
+function stopAnimation() {
+  if(timerFunction != null){
+    clearInterval(timerFunction);
+    timerFunction = null;
+  }
+}
+
+function computeAngle(n) {
+  return ((270 + (6 * n)) * 0.01745329);
+}
+
+function kropki() {
+  var now = new Date();
+  sekunda.setAttribute('cx', 250+113*Math.cos(computeAngle(now.getSeconds())));
+  sekunda.setAttribute('cy', 250+113*Math.sin(computeAngle(now.getSeconds())));
+
+  minuta.setAttribute('cx', 250+113*Math.cos(computeAngle(now.getMinutes())));
+  minuta.setAttribute('cy', 250+113*Math.sin(computeAngle(now.getMinutes())));
+
+  /*
+  godz.setAttribute('cx', 150+113*Math.cos(computeAngle(new Date().getHours()-12)));
+  godz.setAttribute('cy', 150+113*Math.sin(computeAngle(new Date().getHours()-12)));
+  */
+
+  godz.setAttribute('cx', 250+113*Math.cos(computeAngle(now.getHours() * 5)));
+  godz.setAttribute('cy', 250+113*Math.sin(computeAngle(now.getHours() * 5)));
+
+  output.innerText = new Date();
+}
+
+//animate();
+startAnimation();
+</script>
+</body>
+</html>
