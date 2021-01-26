@@ -1,0 +1,17 @@
+* {
+    margin: 0;
+    padding: 0;
+    border: none;
+    box-sizing: content-box;
+}
+canvas {
+    margin: 0 auto;
+}
+main {
+    display: flex;
+    flex-direction: column;
+}
+main output {
+    margin: 0 auto;
+    font-size: 3rem;
+}
