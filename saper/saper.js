@@ -7,8 +7,8 @@ window.onload = function () {
   const gDrawingContext = canvas.getContext("2d");
   const output = document.querySelector('output');
   const size = 50; // in px
-  const numberOfBombs = 40; // no idea if this number is OK
-  const textFont = (function () { return `${size}px serif`; })();
+  const numberOfBombs = 99; // no idea if this number is OK
+  const textFont = (function () { return `${size}px sans-serif`; })();
   const textFillStyle = 'white';
   // not sure what would be a proper name for 2 variables below
   const kPieceHeight = 10; // k means canvas
@@ -34,16 +34,12 @@ window.onload = function () {
   canvas.addEventListener('click', saperOnClick, false);
 
   function draw () {
-    if (isOver)
-      return;
-
-    // {
-    /*
     canvas.width = canvas.width;
-    Has it got the same effect as the very line below?
-    */
-    gDrawingContext.clearRect(0, 0, canvas.width, canvas.height);
-    // }
+
+    if (isOver) {
+      return gameOver();
+      alert('nie powinienes tego widziec');
+    }
 
     // { drawing lines
     gDrawingContext.beginPath();
@@ -220,7 +216,11 @@ window.onload = function () {
 
   function gameOver () {
     isOver = true;
-    document.querySelector('p').innerText = 'Game Over!';
+    gDrawingContext.font = 'bold 80px sans-serif';
+    gDrawingContext.fillStyle = 'red';
+    gDrawingContext.fillText("Game over!", canvas.width / 2, canvas.height / 2);
+    gDrawingContext.fillStyle = 'red';
+    gDrawingContext.fillText("Game over!", canvas.width / 2 + 1, canvas.height / 2 + 1);
   };
 
   // numbers();
