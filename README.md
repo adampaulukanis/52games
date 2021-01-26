@@ -8,3 +8,4 @@ Every week I will make a new game.
 4. colors-cheat-sheet
 5. Latająca kulka
 6. Timer
+7. uklad-sloneczny

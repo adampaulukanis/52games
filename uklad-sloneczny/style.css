@@ -1,0 +1,31 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+h1 {
+    text-align: center;
+}
+#nasz-uklad {
+    display: flex;
+    width: 2000px;
+    background: black;
+    color: white;
+    align-items: center;
+    align-content: space-between;
+}
+ul#nasz-uklad * {
+    list-style: none;
+    margin: 1rem;
+}
+#sun {
+    width: 500px;
+    height: 500px;
+    background: yellow;
+    border-radius: 50%;
+}
+#earth {
+    background: blue;
+    width: 10px;
+    height: 10px;
+}
