@@ -1,0 +1,39 @@
+:root {
+    --width: 150px;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+}
+main {
+    width: 800px;
+    height: 50px;
+    background: #000;
+    overflow: hidden;
+}
+div {
+    margin-left: 0;
+    width: var(--width);
+    height: 100%;
+    background: red;
+    animation-name: slide;
+    animation-duration: .5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+@keyframes slide {
+    0%      { margin-left: 0; }
+    50%     { margin-left: calc(100% - var(--width)); }
+    100%    { margin-left: 0; }
+}
+
