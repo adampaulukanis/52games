@@ -14,3 +14,4 @@ game.
 9. circle-vs-rectangle-collisions
 10. wheel-event
 11. hex-grids
+12. debounce

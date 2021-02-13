@@ -1,0 +1,42 @@
+<!--
+  In the past, the DOCTYPE was needed to specify HTML versions.
+  As of HTML5, providing `html` is sufficient.
+  It is somewhere between a proper HTML tag, and an HTML comment.
+-->
+<!DOCTYPE html>
+<!-- Add the appropriate language for your site -->
+<html lang="en">
+    <head>
+        <!--
+    UTF-8 is a character set including many universal characters.
+    This is an essential tag for all websites, to avoid seeing
+    weird boxes like ▢▢▢
+  -->
+        <meta charset="utf-8" />
+        <!--
+    This critical tag ensures that items on the screen scale
+    correctly on mobile devices. Without this tag, content may
+    appear VERY tiny.
+  -->
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <!--
+    Set your name and a brief description.
+    Used by search engines.
+  -->
+        <meta name="author" content="Adam" />
+        <meta
+            name="description"
+            content="Let me see what the debounce function can actually do"
+        />
+        <!-- This title shows up in the page's tab, next to the favicon -->
+        <title>debounce</title>
+    </head>
+    <body>
+        <h1>Your content here!</h1>
+        <p>Move your mouse for a short while and stop</p>
+        <output></output>
+
+        <!-- If necessary, include JS -->
+        <script src="script.js"></script>
+    </body>
+</html>
