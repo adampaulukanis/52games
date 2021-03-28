@@ -52,6 +52,16 @@ main div {
   border-radius: 50%;
   position: absolute;
 }
+main:hover div::after {
+  content: attr(id);
+  color: white;
+  background: black;
+  padding: 0.5rem;
+  position: relative;
+  left: 10px;
+  opacity: 0.5;
+  font-size: 75%;
+}
 #sun {
   background-color: #fc3;
   transform: translate(-50%, -50%);
