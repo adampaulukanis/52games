@@ -47,6 +47,7 @@ main {
   width: 100vw;
   height: 100vh;
   background-color: #123;
+  position: relative;
 }
 main div {
   border-radius: 50%;
@@ -81,7 +82,7 @@ main:hover div::after {
   width: 7px;
   height: 7px;
   background-color: blue;
-  animation: orbit 60s linear infinite;
+  animation: orbit 365s linear infinite;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -90,7 +91,7 @@ main:hover div::after {
   width: 1px;
   height: 1px;
   background-color: white;
-  animation: moon 10s linear infinite;
+  animation: moon 28s linear infinite;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
