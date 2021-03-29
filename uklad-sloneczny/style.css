@@ -38,78 +38,84 @@ body {
   display: none;
 }
 
-/* Styles for uklad sloneczny */
-html,
-body {
-  height: 100%;
-}
+/* układ słoneczny */
 main {
+  background: black;
   width: 100vw;
   height: 100vh;
-  background-color: #123;
-  position: relative;
-}
-main div {
-  border-radius: 50%;
-  position: absolute;
-}
-main:hover div::after {
-  content: attr(id);
   color: white;
-  background: black;
-  padding: 0.5rem;
+  overflow: hidden;
+  margin: 0;
   position: relative;
-  left: 10px;
-  opacity: 0.5;
-  font-size: 75%;
-  text-transform: capitalize;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }
-#sun {
-  background: rgb(2, 0, 36);
-  background: radial-gradient(
-    circle,
-    rgba(2, 0, 36, 1) 0%,
-    rgba(235, 11, 11, 1) 0%,
-    rgba(234, 235, 11, 1) 89%
-  );
-  transform: translate(-50%, -50%);
-  width: 100px;
-  height: 100px;
+ul {
+  list-style-type: none;
+}
+ul li {
+  border-radius: 50%;
+  list-style-type: none;
+  position: absolute;
+  text-indent: -9999rem;
+}
+/* Słońce */
+ul li:nth-child(1) {
+  background: yellow;
+  width: 57px;
+  height: 57px;
+  z-index: 100;
+}
+/* Merkury */
+ul li:nth-child(2) {
+  border: 1px dotted red;
+  width: 111px;
+  height: 111px;
+  z-index: 1;
+  animation: infinite linear orbit;
+  animation-duration: 2s;
+}
+ul li:nth-child(2)::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  background: red;
+  position: absolute;
+  top: 0;
   left: 50%;
-  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
 }
-#earth {
-  width: 7px;
-  height: 7px;
-  background-color: blue;
-  animation: orbit 365s linear infinite;
-  top: 50%;
+
+/* Wenus */
+ul li:nth-child(3) {
+  border: 1px dotted pink;
+  width: 251px;
+  height: 251px;
+  z-index: 2;
+  animation: infinite linear orbit;
+  animation-duration: 6s;
+}
+ul li:nth-child(3)::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  background: pink;
+  position: absolute;
+  top: 0;
   left: 50%;
   transform: translate(-50%, -50%);
+  border-radius: 50%;
 }
-#moon {
-  width: 1px;
-  height: 1px;
-  background-color: white;
-  animation: moon 28s linear infinite;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
+/* Animations */
 
 @keyframes orbit {
   from {
-    transform: rotate(0deg) translateX(300px) rotate(0deg);
+    transform: rotate(0deg);
   }
   to {
-    transform: rotate(360deg) translateX(300px) rotate(-360deg);
-  }
-}
-@keyframes moon {
-  from {
-    transform: rotate(0deg) translateX(30px) rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg) translateX(30px) rotate(-360deg);
+    transform: rotate(360deg);
   }
 }
