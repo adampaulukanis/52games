@@ -61,57 +61,110 @@ ul li {
   position: absolute;
   text-indent: -9999rem;
 }
-/* Słońce */
-ul li:nth-child(1) {
+#sun {
   background: yellow;
+  background: radial-gradient(circle at 20px 28px, red, yellow);
   width: 57px;
   height: 57px;
   z-index: 100;
 }
-/* Merkury */
-ul li:nth-child(2) {
+#mercury {
   border: 1px dotted red;
   width: 111px;
   height: 111px;
-  z-index: 1;
-  animation: infinite linear orbit;
-  animation-duration: 2s;
+  z-index: 2;
+  animation: infinite linear revolve;
+  animation-duration: 22s;
 }
-ul li:nth-child(2)::after {
+#mercury::after {
   content: "";
   width: 10px;
   height: 10px;
-  background: red;
   position: absolute;
   top: 0;
   left: 50%;
   transform: translate(-50%, -50%);
   border-radius: 50%;
+  background: red;
+  background: radial-gradient(circle at 1px 1px, red, white);
 }
 
-/* Wenus */
-ul li:nth-child(3) {
+#venus {
   border: 1px dotted pink;
   width: 251px;
   height: 251px;
-  z-index: 2;
-  animation: infinite linear orbit;
-  animation-duration: 6s;
+  z-index: 3;
+  animation: infinite linear revolve;
+  animation-duration: 10s;
 }
-ul li:nth-child(3)::after {
+#venus::after {
   content: "";
-  width: 10px;
-  height: 10px;
+  width: 30px;
+  height: 30px;
   background: pink;
+  background: radial-gradient(circle at 15px 30px, red, pink);
   position: absolute;
-  top: 0;
+  top: -0px;
   left: 50%;
   transform: translate(-50%, -50%);
+  border-radius: 50%;
+}
+
+#earth {
+  border: 1px dotted blue;
+  width: 600px;
+  height: 600px;
+  z-index: 4;
+  animation: infinite linear revolve;
+  animation-duration: 60s;
+  border-radius: 50%;
+}
+#earth::after {
+  transform: translate(-50%, -50%);
+  content: "";
+  width: 50px;
+  height: 50px;
+  background: blue;
+  background: radial-gradient(
+    /*
+   * wiem, że to jest spitolone, ale chodzi mi o pokazanie, że może się to
+   * obracać wokół własnej osi
+   */
+      circle at 50% 100%,
+    blue,
+    blue 50%,
+    #333 75%,
+    #111 75%
+  );
+  position: absolute;
+  top: -25px;
+  left: 50%;
+  border-radius: 50%;
+  animation: revolve 24s linear infinite;
+}
+#earth li:nth-child(2) {
+  width: 200px;
+  height: 200px;
+  position: absolute;
+  top: -100px;
+  left: 225px;
+  animation: revolve 24s linear infinite;
+  border: 1px dotted #eee;
+}
+#earth li:nth-child(2)::after {
+  content: '';
+  display: block;
+  width: 6px;
+  height: 6px;
+  background: #fff;
+  position: relative;
+  top: 100px;
+  left: 0px;
   border-radius: 50%;
 }
 /* Animations */
 
-@keyframes orbit {
+@keyframes revolve {
   from {
     transform: rotate(0deg);
   }
