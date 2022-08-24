@@ -17,6 +17,6 @@
   },
   "homepage": "https://adampaulukanis.github.io/52games",
   "dependencies": {
-    "matrix": "git+https://github.com/adampaulukanis/Matrix.git"
+    "grid": "github:adampaulukanis/Grid"
   }
 }
